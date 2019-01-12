@@ -1,6 +1,7 @@
 package tjeit.kr.algorithmpractice;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -10,6 +11,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import tjeit.kr.algorithmpractice.adapters.ChatAdapter;
 import tjeit.kr.algorithmpractice.datas.Chat;
 
 public class Question05Activity extends BaseActivity {
@@ -18,6 +20,9 @@ public class Question05Activity extends BaseActivity {
 //    자바 1.8로 오면서 안써도 되게 업데이트.
 //    그 이전 버전은 반드시 명시해야 함.
     List<Chat> chatList = new ArrayList<Chat>();
+
+    ChatAdapter mAdapter;
+
 
 
 //    컴퓨터가 출제
@@ -77,6 +82,7 @@ public class Question05Activity extends BaseActivity {
 //        입력한 값을 채팅처럼 메시지로 출력 => chatList에 추가.
         Chat inputNumChat = new Chat("user", inputStr);
         chatList.add(inputNumChat);
+        mAdapter.notifyDataSetChanged();
 
 
 
@@ -115,20 +121,34 @@ public class Question05Activity extends BaseActivity {
 
 //        String temp = String.format("%d S %d B 입니다.", strikeCount, ballCount);
 //        Toast.makeText(mContext, temp, Toast.LENGTH_SHORT).show();
-        String replyMessage = String.format("%d S %d B 입니다.", strikeCount, ballCount);
-        Chat reply = new Chat("computer", replyMessage);
-        chatList.add(reply);
+        final String replyMessage = String.format("%d S %d B 입니다.", strikeCount, ballCount);
+
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Chat reply = new Chat("computer", replyMessage);
+                chatList.add(reply);
+                mAdapter.notifyDataSetChanged();
+            }
+        }, 1500);
+
+
 
 
         if (strikeCount == 3) {
 //            Toast.makeText(mContext, "정답입니다!", Toast.LENGTH_SHORT).show();
             Chat correct = new Chat("computer", "정답입니다.");
             chatList.add(correct);
+            mAdapter.notifyDataSetChanged();
+
 //            notifyDatasetChanged가 필요함!
 
 //            Toast.makeText(mContext, userTryCount+"번 만에 맞췄습니다.", Toast.LENGTH_SHORT).show();
             Chat countMessage = new Chat("computer", userTryCount+"번 만에 맞췄습니다.");
             chatList.add(countMessage);
+            mAdapter.notifyDataSetChanged();
+
 
         }
 
@@ -136,6 +156,9 @@ public class Question05Activity extends BaseActivity {
 
     @Override
     public void setValues() {
+
+        mAdapter = new ChatAdapter(mContext, chatList);
+        chatListView.setAdapter(mAdapter);
 
 //        화면을 키면 컴퓨터가 바로 문제를 출제.
 
