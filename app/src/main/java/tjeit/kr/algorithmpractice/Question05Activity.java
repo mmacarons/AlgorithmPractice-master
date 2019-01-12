@@ -12,6 +12,9 @@ public class Question05Activity extends BaseActivity {
 //    컴퓨터가 출제
 
     int[] questionIntArray = new int[3];
+
+    int userTryCount = 0;
+
     private android.widget.ListView chatListView;
     private android.widget.EditText numInputEdt;
     private android.widget.Button okBtn;
@@ -41,6 +44,8 @@ public class Question05Activity extends BaseActivity {
 
 //    정답이 ?S ?B인지 체크하는 메쏘드
     void checkUserNumber() {
+
+
 
 //        세자리가 아닐 경우 다시 입력하게 Toast
 
@@ -91,6 +96,11 @@ public class Question05Activity extends BaseActivity {
 //
         String temp = String.format("%d S %d B 입니다.", strikeCount, ballCount);
         Toast.makeText(mContext, temp, Toast.LENGTH_SHORT).show();
+
+        if (strikeCount == 3) {
+            Toast.makeText(mContext, userTryCount+"번 만에 맞췄습니다.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, "정답입니다!", Toast.LENGTH_SHORT).show();
+        }
 
     }
 
