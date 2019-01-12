@@ -7,7 +7,18 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import tjeit.kr.algorithmpractice.datas.Chat;
+
 public class Question05Activity extends BaseActivity {
+
+//    굳이 <Chat> 을 명시하는 이유?
+//    자바 1.8로 오면서 안써도 되게 업데이트.
+//    그 이전 버전은 반드시 명시해야 함.
+    List<Chat> chatList = new ArrayList<Chat>();
+
 
 //    컴퓨터가 출제
 
@@ -46,6 +57,8 @@ public class Question05Activity extends BaseActivity {
     void checkUserNumber() {
 
 
+//        시도 횟수를 1 증가
+        userTryCount++;
 
 //        세자리가 아닐 경우 다시 입력하게 Toast
 
@@ -60,6 +73,12 @@ public class Question05Activity extends BaseActivity {
 
 //        사용자가 입력한 값을 String으로 따내자.
         String inputStr = numInputEdt.getText().toString();
+
+//        입력한 값을 채팅처럼 메시지로 출력 => chatList에 추가.
+        Chat inputNumChat = new Chat("user", inputStr);
+        chatList.add(inputNumChat);
+
+
 
 //        배열에 각 자리의 숫자를 집어넣기.
 
@@ -93,13 +112,24 @@ public class Question05Activity extends BaseActivity {
             }
         }
 
-//
-        String temp = String.format("%d S %d B 입니다.", strikeCount, ballCount);
-        Toast.makeText(mContext, temp, Toast.LENGTH_SHORT).show();
+
+//        String temp = String.format("%d S %d B 입니다.", strikeCount, ballCount);
+//        Toast.makeText(mContext, temp, Toast.LENGTH_SHORT).show();
+        String replyMessage = String.format("%d S %d B 입니다.", strikeCount, ballCount);
+        Chat reply = new Chat("computer", replyMessage);
+        chatList.add(reply);
+
 
         if (strikeCount == 3) {
-            Toast.makeText(mContext, userTryCount+"번 만에 맞췄습니다.", Toast.LENGTH_SHORT).show();
-            Toast.makeText(mContext, "정답입니다!", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(mContext, "정답입니다!", Toast.LENGTH_SHORT).show();
+            Chat correct = new Chat("computer", "정답입니다.");
+            chatList.add(correct);
+//            notifyDatasetChanged가 필요함!
+
+//            Toast.makeText(mContext, userTryCount+"번 만에 맞췄습니다.", Toast.LENGTH_SHORT).show();
+            Chat countMessage = new Chat("computer", userTryCount+"번 만에 맞췄습니다.");
+            chatList.add(countMessage);
+
         }
 
     }
