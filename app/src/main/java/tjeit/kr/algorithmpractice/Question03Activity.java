@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class Question03Activity extends BaseActivity {
 
@@ -30,19 +31,40 @@ public class Question03Activity extends BaseActivity {
     @Override
     public void setupEvents() {
 
-        twoBtn.setOnClickListener(new View.OnClickListener() {
+//        2~9단까지는 똑같은 행위를 하는데 숫자만 다른 상황.
+//        그 달라지는 숫자를 태그에 메모해두고, 찾아서 활용 이벤트.
+
+//        onclicklistener를 변수로 만듬, 끝에 세미콜론 찍어야 함
+        View.OnClickListener guguListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+//                2단만 출력하는게 아니라, 버튼에 달려있는 Tag를 활용해서 상황에 맞는 단을 출력.
+//                v가 가지고 있는 태그를 조회하면, 몇단이 눌렸는지 유추 가능.
+//                XML에 적은 태그는 기본적으로 String 형태로 뽑힘.
+
+                String danStr = v.getTag().toString();
+                int dan = Integer.parseInt(danStr);
+
 
                 String gugudanStr = "";
 
                 for (int i=1; i<=9; i++) {
-                    gugudanStr += String.format("%d * %d = %d\n", 2, i, 2*i);
+                    gugudanStr += String.format("%d * %d = %d\n", dan, i, dan*i);
                 }
                 resultTxt.setText(gugudanStr);
 
             }
-        });
+        };
+
+        twoBtn.setOnClickListener(guguListener);
+        threeBtn.setOnClickListener(guguListener);
+        fourBtn.setOnClickListener(guguListener);
+        fiveBtn.setOnClickListener(guguListener);
+        sixBtn.setOnClickListener(guguListener);
+        sevenBtn.setOnClickListener(guguListener);
+        eightBtn.setOnClickListener(guguListener);
+        nineBtn.setOnClickListener(guguListener);
 
     }
 
