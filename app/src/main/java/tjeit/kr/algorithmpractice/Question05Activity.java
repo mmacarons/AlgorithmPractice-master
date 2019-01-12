@@ -1,9 +1,11 @@
 package tjeit.kr.algorithmpractice;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class Question05Activity extends BaseActivity {
 
@@ -27,6 +29,67 @@ public class Question05Activity extends BaseActivity {
     @Override
     public void setupEvents() {
 
+        okBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkUserNumber();
+            }
+        });
+
+
+    }
+
+//    정답이 ?S ?B인지 체크하는 메쏘드
+    void checkUserNumber() {
+
+//        세자리가 아닐 경우 다시 입력하게 Toast
+
+        if (numInputEdt.length() != 3) {
+            Toast.makeText(mContext, "3자리 숫자를 입력하세요.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+//        사용자가 입력한 숫자를 저장할 세칸짜리 배열.
+//        152 => [1],[5],[2]
+        int[] userInputIntArray = new int[3];
+
+//        사용자가 입력한 값을 String으로 따내자.
+        String inputStr = numInputEdt.getText().toString();
+
+//        배열에 각 자리의 숫자를 집어넣기.
+
+//        먼저 String => 숫자로 변경
+        int inputNumber = Integer.parseInt(inputStr);
+
+//        0번칸 : 맨 앞자리를 대입
+        userInputIntArray[0] = inputNumber / 100;
+
+//        1번칸 : 가운데 자리를 따내는 방법?
+        userInputIntArray[1] = inputNumber % 100 / 10;
+
+        userInputIntArray[2] = inputNumber % 10;
+
+        int strikeCount = 0;
+        int ballCount = 0;
+
+//        사용자가 입력한 값을 담당하는 index
+        for (int i=0; i<3; i++) {
+
+            for (int j=0; j<3; j++){
+                if (userInputIntArray[i] == questionIntArray[j]) {
+                    if (i==j){
+//                        위치도 같다! strike 갯수 증가
+                        strikeCount++;
+                    }
+                    else {
+                        ballCount++;
+                    }
+                }
+            }
+        }
+
+//
+        String temp = String.format("%d S %d B 입니다.", strikeCount, ballCount);
 
     }
 
