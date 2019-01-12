@@ -90,6 +90,7 @@ public class Question05Activity extends BaseActivity {
 
 //
         String temp = String.format("%d S %d B 입니다.", strikeCount, ballCount);
+        Toast.makeText(mContext, temp, Toast.LENGTH_SHORT).show();
 
     }
 
