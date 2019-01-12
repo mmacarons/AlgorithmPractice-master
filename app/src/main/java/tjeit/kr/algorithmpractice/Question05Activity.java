@@ -118,7 +118,6 @@ public class Question05Activity extends BaseActivity {
             }
         }
 
-
 //        String temp = String.format("%d S %d B 입니다.", strikeCount, ballCount);
 //        Toast.makeText(mContext, temp, Toast.LENGTH_SHORT).show();
         final String replyMessage = String.format("%d S %d B 입니다.", strikeCount, ballCount);
@@ -130,25 +129,34 @@ public class Question05Activity extends BaseActivity {
                 Chat reply = new Chat("computer", replyMessage);
                 chatList.add(reply);
                 mAdapter.notifyDataSetChanged();
+                chatListView.smoothScrollToPosition(chatList.size()-1);
             }
         }, 1500);
 
-
-
-
         if (strikeCount == 3) {
 //            Toast.makeText(mContext, "정답입니다!", Toast.LENGTH_SHORT).show();
-            Chat correct = new Chat("computer", "정답입니다.");
-            chatList.add(correct);
-            mAdapter.notifyDataSetChanged();
 
-//            notifyDatasetChanged가 필요함!
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Chat correct = new Chat("computer", "정답입니다.");
+                    chatList.add(correct);
+                    mAdapter.notifyDataSetChanged();
+                    chatListView.smoothScrollToPosition(chatList.size()-1);
+
+                }
+            }, 1000);
 
 //            Toast.makeText(mContext, userTryCount+"번 만에 맞췄습니다.", Toast.LENGTH_SHORT).show();
-            Chat countMessage = new Chat("computer", userTryCount+"번 만에 맞췄습니다.");
-            chatList.add(countMessage);
-            mAdapter.notifyDataSetChanged();
-
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Chat countMessage = new Chat("computer", userTryCount+"번 만에 맞췄습니다.");
+                    chatList.add(countMessage);
+                    mAdapter.notifyDataSetChanged();
+                    chatListView.smoothScrollToPosition(chatList.size()-1);
+                }
+            }, 1500);
 
         }
 
