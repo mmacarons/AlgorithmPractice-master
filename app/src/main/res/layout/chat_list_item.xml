@@ -21,9 +21,10 @@
             android:layout_height="match_parent">
 
             <ImageView
+                android:layout_marginLeft="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@mipmap/speech_bubble"
+                android:src="@drawable/computer_message_background"
                 android:scaleType="fitXY"/>
 
             <TextView
@@ -53,7 +54,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@mipmap/speech_bubble_user"
+                android:src="@drawable/user_message_background"
                 android:scaleType="fitXY"/>
 
             <TextView
